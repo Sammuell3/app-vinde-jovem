@@ -23,6 +23,15 @@ const userSchema = new Schema({
         required: true,
         minLength: 6,
         maxLength: 50
+    },
+    image: {
+        type: String,
+        required: false,
+        default: "https://www.instagram.com/movimentovindejovem/"
+    },
+    role: {
+        type: Number,
+        default: 0 // 0 -> User, 1 -> Admin
     }
 },
 

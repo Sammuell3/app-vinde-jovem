@@ -39,16 +39,11 @@ const eventSchema = new Schema({
     },
     category: {
         type: String,
-        required: true
+        required: false
     },
     userAdmin: {
         type: Schema.Types.ObjectId,
-        ref: "UserAdmin",
-        required: true
-    },
-    registration: {
-        type: Schema.Types.ObjectId,
-        ref: "Registration",
+        ref: "User",
         required: true
     }
 },
@@ -58,4 +53,4 @@ const eventSchema = new Schema({
 
 )
 
-export const EventModel = mongoose.model("Event", eventSchema);
+export const Event = mongoose.model("Event", eventSchema);
