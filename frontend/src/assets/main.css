@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+    /* CORES PERSONALIZADAS */
+    --color-primary: #590d12;
+    --color-primary-hover: #7a1b21;
+    --color-secondary: #fbc02d;
+
+    --color-background: #F8F9FA;
+    --color-surface: #FFFFFF;
+
+    /* Mapeando os nomes antigos para os novos para não quebrar o login */
+    --color-background-light: #FFFFFF;
+    --color-background-dark: #101922;
+
+    --color-text-main: #212529;
+    --color-text-muted: #6C757D;
+
+    /* Compatibilidade */
+    --color-text-primary: #212529;
+    --color-text-secondary: #6C757D;
+
+    /* FONTES */
+    --font-display: "Manrope", sans-serif;
+    --font-sans: "Poppins", sans-serif;
+
+    /* BORDAS */
+    --radius-sm: 8px;
+    --radius-DEFAULT: 1rem;
+    --radius-lg: 16px;
+    --radius-xl: 1.5rem;
+    --radius-full: 9999px;
+}
+
+/* DARK MODE "CLASS" (MANUAL) */
+/* No v4, isso é automático se usar a classe 'dark' no HTML, 
+   mas você pode personalizar variáveis específicas se quiser */
+.dark {
+    /* Exemplo: inverte o fundo quando estiver em dark mode */
+    --color-background-light: #101922;
+    --color-text-primary: #ffffff;
+}
