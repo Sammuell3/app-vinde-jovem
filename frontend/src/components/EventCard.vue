@@ -19,8 +19,15 @@ defineProps({
     isJoined: {
         type: Boolean,
         default: false
+    },
+    price: {
+        type: Number,
+        default: 0
     }
 })
+import Button from './ui/Button.vue'
+import { formatDate } from '../utils/dateUtils'
+import { formatPrice } from '../utils/currencyUtils'
 </script>
 
 <template>
@@ -30,9 +37,13 @@ defineProps({
     >
         <!-- Image Section -->
         <div 
-            class="w-full bg-center bg-no-repeat aspect-video bg-cover" 
+            class="w-full bg-center bg-no-repeat aspect-video bg-cover relative" 
             :style="{ backgroundImage: `url('${image}')` }"
-        ></div>
+        >
+            <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-sm">
+                <span class="text-xs font-bold text-text-main uppercase tracking-wide">{{ formatPrice(price) }}</span>
+            </div>
+        </div>
         
         <!-- Content Section -->
         <div class="flex w-full flex-col items-stretch justify-center gap-4 p-4">
@@ -40,26 +51,32 @@ defineProps({
             
             <div class="flex items-center text-text-muted gap-2">
                 <span class="material-symbols-outlined text-lg">calendar_month</span>
-                <p class="text-base font-normal leading-normal">{{ date }}</p>
+                <p class="text-base font-normal leading-normal">{{ formatDate(date) }}</p>
             </div>
             
             <!-- Action Button - Prevent navigation when clicking button directly if strictly needed, but usually clicking card is fine -->
             <div class="w-full">
-                <button 
+                <Button 
                     v-if="!isJoined"
-                    class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-sm h-11 px-4 bg-primary text-white text-base font-bold leading-normal hover:bg-primary-hover transition-colors"
+                    variant="primary"
+                    width="full"
+                    size="md"
+                    class="rounded-sm h-11"
                 >
-                    <span class="truncate">Join</span>
-                </button>
+                    Join
+                </Button>
 
                 <!-- Joined State Button -->
-                <button 
+                <Button 
                     v-else
-                    class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-sm h-11 px-4 bg-primary/20 text-primary text-base font-bold leading-normal"
+                    variant="soft"
+                    width="full"
+                    size="md"
+                    class="rounded-sm h-11"
                 >
                     <span class="material-symbols-outlined text-lg mr-2">check_circle</span>
-                    <span class="truncate">Joined</span>
-                </button>
+                    Joined
+                </Button>
             </div>
         </div>
     </RouterLink>

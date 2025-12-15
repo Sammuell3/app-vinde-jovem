@@ -17,7 +17,7 @@ import LoginForm from '../components/LoginForm.vue'
 
             <div class="px-6 py-4 w-full">
                 <!-- Welcome Header -->
-                <h1 class="text-text-primary tracking-tight text-[32px] font-bold leading-tight text-center pb-8">Welcome Back!</h1>
+                <h1 class="text-text-primary tracking-tight text-[32px] font-bold leading-tight text-center pb-8">Bem-vindo!</h1>
                 
                 <!-- Login Form Molecule -->
                 <LoginForm />
@@ -27,11 +27,11 @@ import LoginForm from '../components/LoginForm.vue'
 
             <div class="px-6 py-8 text-center">
                 <!-- Inspirational Quote -->
-                <p class="text-text-secondary text-sm font-normal leading-relaxed italic mb-6">"It is Jesus that you seek when you dream of happiness; He is waiting for you when nothing else you find satisfies you."</p>
+                <p class="text-text-secondary text-sm font-normal leading-relaxed italic mb-6">"É Jesus que você busca quando sonha felicidade; Ele te espera quando nada mais que você encontre satisfação."</p>
                 
                 <!-- Sign-Up Link -->
                 <p class="text-text-secondary text-sm font-normal leading-normal">
-                    Don't have an account? <a class="text-primary font-bold" href="#">Sign Up</a>
+                    Não tem uma conta? <a class="text-primary font-bold" href="/register">Criar Conta</a>
                 </p>
             </div>
 

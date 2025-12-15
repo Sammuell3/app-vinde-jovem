@@ -17,6 +17,10 @@ const props = defineProps({
     placeholder: {
         type: String,
         default: ''
+    },
+    trailingIcon: {
+        type: String,
+        default: ''
     }
 })
 
@@ -46,7 +50,7 @@ const togglePassword = () => {
                 @input="$emit('update:modelValue', $event.target.value)"
                 :placeholder="placeholder"
                 class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe0e6] bg-white h-14 placeholder:text-text-secondary p-[15px] text-base font-normal leading-normal"
-                :class="{ 'pr-12': type === 'password' }"
+                :class="{ 'pr-12': type === 'password' || trailingIcon }"
             />
             
             <div 
@@ -56,6 +60,15 @@ const togglePassword = () => {
             >
                 <span class="material-symbols-outlined" style="font-size: 24px;">
                     {{ showPassword ? 'visibility' : 'visibility_off' }}
+                </span>
+            </div>
+
+            <div 
+                v-else-if="trailingIcon"
+                class="absolute inset-y-0 right-0 flex items-center pr-4 text-text-secondary pointer-events-none"
+            >
+                <span class="material-symbols-outlined" style="font-size: 24px;">
+                    {{ trailingIcon }}
                 </span>
             </div>
         </div>

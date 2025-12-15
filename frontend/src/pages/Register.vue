@@ -27,11 +27,11 @@ import RegisterForm from '../components/RegisterForm.vue'
 
             <div class="px-6 py-8 text-center">
                 <!-- Inspirational Quote -->
-                <p class="text-text-secondary text-sm font-normal leading-relaxed italic mb-6">"It is Jesus that you seek when you dream of happiness; He is waiting for you when nothing else you find satisfies you."</p>
+                <p class="text-text-secondary text-sm font-normal leading-relaxed italic mb-6">"É Jesus que você busca quando sonha felicidade; Ele te espera quando nada mais que você encontre satisfação."</p>
                 
                 <!-- Login Link -->
                 <p class="text-text-secondary text-sm font-normal leading-normal">
-                    Já tem uma conta? <a class="text-primary font-bold" href="#">Login</a>
+                    Já tem uma conta? <a class="text-primary font-bold" href="/login">Entrar</a>
                 </p>
             </div>
         </div>

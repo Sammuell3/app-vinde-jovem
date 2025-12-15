@@ -1,8 +1,8 @@
 import { Event } from "../models/event.model.js";
+import { JoinEvent } from "../models/join-event-model.js";
 
 const createEvent = async (req, res) => {
     try {
-
         const {
             title,
             description,
@@ -15,8 +15,11 @@ const createEvent = async (req, res) => {
             userAdmin
         } = req.body;
 
-        if (!title || !description || !date || !time || !location || !image || !price || !category || !userAdmin) {
-            return res.status(400).json({ message: "All fields are required" });
+        // Validation: Only check fields that are REQUIRED in the model
+        // Required: title, date, time, location, price, userAdmin
+        // Optional: description, image, category
+        if (!title || !date || !time || !location || price === undefined || price === null || !userAdmin) {
+            return res.status(400).json({ message: "Required fields missing: Title, Date, Time, Location, Price, or User" });
         }
 
         const event = await Event.create({
@@ -43,21 +46,28 @@ const createEvent = async (req, res) => {
 
 const getEvents = async (req, res) => {
     try {
-
-        const events = await Event.find();
+        const events = await Event.find().lean(); // Use lean for better performance and easier modification
 
         if (!events) {
             return res.status(404).json({ message: "Events not found" });
         }
 
+        // Add attendee count to each event
+        const eventsWithCount = await Promise.all(events.map(async (event) => {
+            // Count all records for this event (or filter by status: 'confirmado' if desired)
+            const count = await JoinEvent.countDocuments({ event_id: event._id });
+            return { ...event, attendees_count: count };
+        }));
+
         res.status(200).json({
             message: "Events found successfully",
-            events: events
+            events: eventsWithCount
         });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 }
+
 const deleteEvent = async (req, res) => {
     try {
         const { id: event_id } = req.params;
@@ -68,7 +78,10 @@ const deleteEvent = async (req, res) => {
             return res.status(404).json({ message: "Event not found" });
         }
 
-        await Event.findByIdAndDelete(user_id);
+        // Cascade delete: Remove all join records for this event
+        await JoinEvent.deleteMany({ event_id: event_id });
+
+        await Event.findByIdAndDelete(event_id);
 
         res.status(200).json({
             message: "Event deleted successfully"

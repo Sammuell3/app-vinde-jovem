@@ -79,8 +79,57 @@ const deleteJoinEvent = async (req, res) => {
     }
 }
 
+const leaveEventByEventId = async (req, res) => {
+    try {
+        const { eventId } = req.params;
+        const userId = req.user.id; // From token
+
+        const deleted = await JoinEvent.findOneAndDelete({
+            user_id: userId,
+            event_id: eventId
+        });
+
+        if (!deleted) {
+            return res.status(404).json({ message: "You are not joined to this event" });
+        }
+
+        res.status(200).json({ message: "Successfully left the event" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const getUsersByEvent = async (req, res) => {
+    try {
+        const { eventId } = req.params;
+
+        // Optional: Check if user is admin or the event owner (if applicable)
+        // For now allowing authenticated users (or restrict to admin)
+        if (req.user.role !== 1) { // Assuming 1 is admin
+            return res.status(403).json({ message: "Access denied" });
+        }
+
+        const attendees = await JoinEvent.find({ event_id: eventId })
+            .populate('user_id', 'name email') // Populate specific fields
+            .select('user_id status createdAt');
+
+        if (!attendees) {
+            return res.status(404).json({ message: "No attendees found" });
+        }
+
+        res.status(200).json({
+            message: "Attendees found successfully",
+            attendees
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 export {
     joinEvent,
     myEvents,
-    deleteJoinEvent
+    deleteJoinEvent,
+    leaveEventByEventId,
+    getUsersByEvent
 }
